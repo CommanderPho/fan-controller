@@ -6,7 +6,7 @@ void setup() {
 }
 
 int recordSignal() {
-    Serial.print("Ready to record: ");
+    Serial.print(F("Ready to record: "));
 
     int val = 0;
     int lastval = 0;
@@ -18,7 +18,7 @@ int recordSignal() {
 
     while (1) {
         unsigned long mnow = micros();
-        val = digitalRead(_rx_pin);
+        val = digitalRead(2);
         if (val != lastval) {
             sig[siglength] = mnow;
             lasttime = mnow;
@@ -33,33 +33,33 @@ int recordSignal() {
                 // Too small, assume a failure
                 return 1;
             }
-            Serial.print("\nCapture Complete. Signal Length: ");
+            Serial.print(F("\nCapture Complete. Signal Length: "));
             delay(5);
             Serial.println(siglength);
-            Serial.println("======= Start Signal Below Here ==========");
+            Serial.println(F("======= Start Signal Below Here =========="));
             for (int i=1; i<siglength; i++) {
                 Serial.print(sig[i] - sig[i-1]);
-                Serial.print(", ");
+                Serial.print(F(", "));
             }
             Serial.println("");
-            Serial.println("======= End Signal Here ==========");
+            Serial.println(F("======= End Signal Here =========="));
             return 0;
         }
     }
 }
 
 void loop() {
-  Serial.println("\n\nStarting receive...");
+  Serial.println(F("\n\nStarting receive..."));
   int result = recordSignal();
   if (result == 0) {
-    Serial.println("Receive completed successfully!");
+    Serial.println(F("Receive completed successfully!"));
   } else {
-    Serial.print("Receive errored, no signal was written, return code: ");
+    Serial.print(F("Receive errored, no signal was written, return code: "));
     Serial.println(result);
   }
 
   Serial.println("");
-  Serial.println("Reset your Arduino to scan again...");
+  Serial.println(F("Reset your Arduino to scan again..."));
 
   while(true) {}
 }
