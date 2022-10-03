@@ -1,7 +1,8 @@
 #define MAX_SIGNAL_LEN 1500
 
 void setup() {
-  Serial.begin(9600);
+  // Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(2, INPUT);
 }
 
